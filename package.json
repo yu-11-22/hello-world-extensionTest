@@ -1,10 +1,10 @@
 {
-  "name": "testextension",
-  "displayName": "testExtension",
-  "description": "testExtension",
+  "name": "hello-world-extensionTest",
+  "displayName": "hello-world-extensionTest",
+  "description": "hello-world-extensionTest",
   "version": "0.0.1",
-  "repository": "https://github.com/yu-11-22/testExtension",
-  "homepage": "https://github.com/yu-11-22/testExtension#readme",
+  "repository": "https://github.com/yu-11-22/hello-world-extensionTest",
+  "homepage": "https://github.com/yu-11-22/hello-world-extensionTest#readme",
   "publisher": "YU-RONG-CHANG",
   "license": "SEE LICENSE IN LICENSE",
   "icon": "image/icon.png",
@@ -19,7 +19,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "testextension.helloWorld",
+        "command": "hello-world-extensionTest.helloWorld",
         "title": "Hello World"
       }
     ]

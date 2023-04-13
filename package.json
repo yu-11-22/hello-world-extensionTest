@@ -3,6 +3,11 @@
   "displayName": "testExtension",
   "description": "testExtension",
   "version": "0.0.1",
+  "repository": "https://github.com/yu-11-22/testExtension",
+  "homepage": "https://github.com/yu-11-22/testExtension#readme",
+  "publisher": "YU-RONG-CHANG",
+  "license": "SEE LICENSE IN LICENSE",
+  "icon": "image/icon.png",
   "engines": {
     "vscode": "^1.77.0"
   },

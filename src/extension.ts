@@ -1,26 +1,53 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+/**
+ * @param context 
+ */
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "hello-world-extensionTest" is now active!');
+	let issetSiteId = false;
+	// 正則表達式的類型
+	let type: RegExpExecArray | null;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('hello-world-extensionTest.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from extensionTest!');
+	// 開啟檔案後填寫修改的站台 id
+	let opend = vscode.workspace.onDidOpenTextDocument((e) => {
+		console.log('opend');
+		let openRegx = new RegExp('//\\s*##目前要修改的站台\\s*id：XXX', 'gm');
+		// 有設置填寫站台 id 的字串，該檔案會跳出填寫站台 id 的訊息
+		if ((type = openRegx.exec(e.getText())) !== null) {
+			vscode.window.showWarningMessage('請填寫目前要修改的站台 id !!', '確定');
+			issetSiteId = true;
+		} else {
+			issetSiteId = false;
+		}
 	});
 
-	context.subscriptions.push(disposable);
+	// 存檔時做的事
+	let saved = vscode.workspace.onDidSaveTextDocument((e) => {
+		console.log('saved');
+		let savedRegx = new RegExp('//\\s*##目前要修改的站台\\s*id：\\d+', 'gm');
+		// 有 id 字串，就
+		if ((type = savedRegx.exec(e.getText())) !== null) {
+			vscode.window.showInformationMessage('您的文件已修改');
+		} else if (issetSiteId) {
+			// 存檔時沒有 id 字串，就繼續跳警告訊息
+			vscode.window.showWarningMessage('請填寫目前要修改的站台 id !!', '確定');
+		}
+	});
+
+	// 關閉檔案後的行為
+	let closed = vscode.workspace.onDidCloseTextDocument((e) => {
+		console.log('closed');
+		let closedRegx = new RegExp('//\\s*##目前要修改的站台\\s*id：\\d+', 'gm');
+		// 如果站台 id 還存在時，跳錯誤訊息並打開已關閉的檔案
+		if ((type = closedRegx.exec(e.getText())) !== null) {
+			let filename = e.fileName.replace(/^.*[\\\/]/, '');
+			vscode.window.showErrorMessage(`您尚未復原 ${filename} 檔案內的站台 id 的註解!!`, '確定');
+			vscode.commands.executeCommand('workbench.action.reopenClosedEditor');
+		}
+	});
+
+	context.subscriptions.push(opend, closed, saved);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

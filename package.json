@@ -14,13 +14,15 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "hello-world-extensionTest.helloWorld",
-        "title": "Hello World"
+        "command": "hello-world-extensionTest.openfile",
+        "title": "open file"
       }
     ]
   },

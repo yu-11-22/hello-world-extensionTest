@@ -1,10 +1,14 @@
 ## Features
 
-test!!
+判斷正在編輯的內容是否為正確的站台!
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+為了讓程式正確的運行，需加入以下註解↓
+--------------------------------------------------------------------------------------------------------
+// 原始設定內容：「目前要修改的站台id：XXX」，請將 XXX 更改為要修改的站台 id，前綴不加 0，關閉時務必復原!!
+// ##目前要修改的站台id：XXX
+--------------------------------------------------------------------------------------------------------
 
 ## Extension Settings
 
